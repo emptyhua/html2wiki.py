@@ -1,5 +1,4 @@
-# html2wiki.py
-convert html to mediawiki format
+# Usage
 ```
 usage: html2wiki.py [-h] [-removelinks] [-downimage] [-imagename IMAGENAME]
                     [-useragent USERAGENT]
@@ -21,4 +20,9 @@ image name template marks:
 {i}	 index of the image
 {ext}	 extension of the image: .jpg .png .gif ...
 {name}	 image name without extension
+```
+# Example
+```bash
+mkdir ./bluehua.org
+python3 ./html2wiki.py "https://bluehua.org" "//div[contains(@class,'post')]" ./bluehua.org/index.txt -removelinks -downimage -imagename "bluehua-{i}{ext}"
 ```
