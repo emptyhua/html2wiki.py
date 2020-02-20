@@ -15,7 +15,7 @@ class HTML2Wiki:
 
     re_trimspace = re.compile(r'\s+')
     re_htag = re.compile(r'^h([1-6])$')
-    newlinetags  = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div', 'pre', 'blockquote']
+    newlinetags  = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div', 'pre', 'blockquote', 'section']
     keeptags = ['pre', 'q', 'u', 'del', 'code', 'blockquote']
     tableattrs = ['scope', 'colspan', 'rowspan']
     mimemap = {
@@ -88,13 +88,22 @@ class HTML2Wiki:
             out += '[' + urljoin(self.url, el.attrib['href']) + ' '
             end = ']'
         elif el.tag == 'img':
-            if self.image_save_dir is not None:
-                name = self.download_image(el.attrib['src'])
-                out += '[[File:' + name + ']]'
-            else:
-                path = urlparse(el.attrib['src']).path
-                basename = path[path.rfind('/')+1:]
-                out += '[[File:' + basename + ']]'
+            src = ''
+            if 'data-src' in el.attrib:
+                src = el.attrib['data-src']
+            elif 'data-original-src' in el.attrib:
+                src = el.attrib['data-original-src']
+            elif 'src' in el.attrib:
+                src = el.attrib['src']
+
+            if src != '':
+                if self.image_save_dir is not None:
+                    name = self.download_image(src)
+                    out += '[[File:' + name + ']]'
+                else:
+                    path = urlparse(src).path
+                    basename = path[path.rfind('/')+1:]
+                    out += '[[File:' + basename + ']]'
         elif el.tag == 'strong':
             out += "'''"
             end = "'''"
