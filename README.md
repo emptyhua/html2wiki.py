@@ -1,6 +1,6 @@
 # Usage
 ```
-usage: html2wiki.py [-h] [-removelinks] [-downimage] [-imagename IMAGENAME]
+usage: url2wiki.py [-h] [-removelinks] [-downimage] [-imagename IMAGENAME]
                     [-useragent USERAGENT]
                     url xpath output
 
@@ -24,5 +24,5 @@ image name template marks:
 # Example
 ```bash
 mkdir ./bluehua.org
-python3 ./html2wiki.py "https://bluehua.org" "//div[contains(@class,'post')]" ./bluehua.org/index.txt -removelinks -downimage -imagename "bluehua-{i}{ext}"
+python3 ./url2wiki.py "https://bluehua.org" "//div[contains(@class,'post')]" ./bluehua.org/index.txt -removelinks -downimage -imagename "bluehua-{i}{ext}"
 ```
